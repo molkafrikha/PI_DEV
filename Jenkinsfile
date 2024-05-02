@@ -7,12 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the specific branch
-                git branch: 'ZoghlamiSirine', credentialsId: 'github-piweb-backend-token', url: 'https://github.com/SirineZoghlami/Back-Piweb.git'
-            }
-        }
+        
         stage('Install dependencies') {
             steps {
                 script {
@@ -53,48 +48,9 @@ pipeline {
                 }
             }
         }
-       stage('Deploy to Nexus') {
-steps{ 
-script {
-docker.withRegistry("http://"+registry,
-registryCredentials ) {
-sh('docker push $registry/nodemongoapp:6.0 ')
-}
-}
-}
-}
+       
 
-stage('Run application ') {
-steps{ 
-script {
-docker.withRegistry("http://"+registry, registryCredentials 
-) {
-sh('docker pull $registry/nodemongoapp:6.0 ')
-sh('docker-compose up -d ')
-}
-}
-}
-}
-
-
-stage("Run Prometheus"){
-      steps{
- 
-        script{
-
-        sh('docker start prometheus')
-
-        }
-      }
-    }
-     stage("Run Grafana"){ 
-      steps{
-
-        script{
-        sh('docker start grafana')
-        }
-      }
-    }
+    
   } 
 
 }
