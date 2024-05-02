@@ -1,0 +1,4 @@
+# Default behavior of git on Windows systems is to convert LF linebreaks to CRLF when checking out files,
+# but to store the linebreaks as LF when committing a change.
+# The line below is to prevent git from converting linebreaks in .js files
+*.js text eol=lf
